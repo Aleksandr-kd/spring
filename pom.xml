@@ -34,7 +34,7 @@
         <aspectj.version>1.9.22</aspectj.version>
         <assertj-core.version>3.26.3</assertj-core.version>
 
-        <spring-boot.version>2.7.17</spring-boot.version>
+        <spring-boot.version>3.4.5</spring-boot.version>
         <spring-context.version>5.3.30</spring-context.version>
         <lombok.version>1.18.34</lombok.version>
 
@@ -67,11 +67,6 @@
             <artifactId>allure-junit5</artifactId>
             <version>${allure-junit5.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>${aspectj.version}</version>
-        </dependency>
 
         <!-- Spring Boot Starter -->
         <dependency>
@@ -85,7 +80,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <version>${spring-boot.version}</version>
-<!--            <scope>test</scope>-->
+            <scope>test</scope>
         </dependency>
 
         <!-- Lombok для упрощения кода -->
@@ -108,6 +103,15 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+
                 </configuration>
             </plugin>
 
@@ -126,7 +130,7 @@
                             junit.jupiter.execution.parallel.mode.default=concurrent
                             junit.jupiter.execution.parallel.mode.classes.default=concurrent
                             junit.jupiter.execution.parallel.config.strategy=fixed
-                            junit.jupiter.execution.parallel.config.fixed.parallelism=4
+                            junit.jupiter.execution.parallel.config.fixed.parallelism=5
                         </configurationParameters>
                     </properties>
 
@@ -166,6 +170,12 @@
                     <reportDirectory>${project.build.directory}/allure-report</reportDirectory>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+            </plugin>
+
 
         </plugins>
     </build>

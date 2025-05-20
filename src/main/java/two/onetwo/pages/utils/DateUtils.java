@@ -1,4 +1,4 @@
-package utils;
+package two.onetwo.pages.utils;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;

@@ -1,22 +1,29 @@
-package pages;
+package two.onetwo.pages.pages;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import utils.DateUtils;
+import org.openqa.selenium.support.PageFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import two.onetwo.pages.utils.DateUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
+@Component
+@Scope("prototype")
 public class RegistrationFormPage extends AbsBasePage {
     private final DateUtils dateUtils;
 
-    public RegistrationFormPage(WebDriver driver) {
+    @Autowired
+    public RegistrationFormPage(@Qualifier("testDriver") WebDriver driver) {
         super(driver, "/form.html");
         this.dateUtils = new DateUtils(driver);
+        PageFactory.initElements(driver, this);
     }
 
     @FindBy(id = "username")
@@ -37,11 +44,11 @@ public class RegistrationFormPage extends AbsBasePage {
     @FindBy(id = "language_level")
     private WebElement languageLevel;
 
-    @FindBy(tagName = "[type='submit']")
-    private WebElement submit;
-
     @FindBy(css = "[id='output']")
     private WebElement output;
+
+    @FindBy(css = "form#registrationForm input[type='submit']")
+    private WebElement registrationForm;
 
     @Step("Ввести имя пользователя: {nameRegistration}")
     public void setName(String nameRegistration) {
@@ -78,7 +85,7 @@ public class RegistrationFormPage extends AbsBasePage {
 
     @Step("Зарегистрировать пользователя")
     public void userRegistration() {
-        driver.findElement(By.cssSelector("form#registrationForm input[type='submit']")).click();
+        registrationForm.click();
     }
 
     @Step("Получение текста после регистрации")

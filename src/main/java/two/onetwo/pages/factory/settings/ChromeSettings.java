@@ -1,10 +1,9 @@
-package factory.settings;
+package two.onetwo.pages.factory.settings;
 
-import data.BrowserModeData;
-import exceptions.ModeNotSupportedException;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.AbstractDriverOptions;
-
+import two.onetwo.pages.data.BrowserModeData;
+import two.onetwo.pages.exceptions.ModeNotSupportedException;
 
 public class ChromeSettings implements IBrowserSettings {
 

@@ -1,28 +1,30 @@
 package tests.otusTests;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import pages.RegistrationFormPage;
-import tests.TestSetupExtension;
+import two.TestApplication;
+import two.onetwo.pages.pages.RegistrationFormPage;
 
-@SpringBootTest
-@ExtendWith({TestSetupExtension.class, SpringExtension.class})
+
+@SpringBootTest(classes = TestApplication.class)
 public class RegistrationFormTests {
 
-    @Autowired
-    private WebDriver driver;
+    @BeforeEach
+    void setUp() {
+        registrationFormPage.open();
+    }
 
+    @Autowired
+    private RegistrationFormPage registrationFormPage;
 
     @Test
     @Tag("autotest")
     @DisplayName("Проверка регистрации.")
-    public void testCorrect(WebDriver driver) {
+    public void testCorrect() {
         String name = "ОТУС";
         String email = System.getProperty("login");
         String birthDate = "15-12-1995";
@@ -30,14 +32,12 @@ public class RegistrationFormTests {
         String password = System.getProperty("password");
         String passwordRepeat = System.getProperty("password.repeat");
 
-        RegistrationFormPage registrationFormPage = new RegistrationFormPage(driver);
-        registrationFormPage.open();
-
         String birthDateFormatted = registrationFormPage.dataRegistration(birthDate);
-        String expectedText = String.format("Имя пользователя: %s Электронная почта: %s Дата рождения: %s " +
+        String expectedText = String.format("Имя по льзователя: %s Электронная почта: %s Дата рождения: %s " +
                 "Уровень языка: advanced", name, email, birthDateFormatted);
 
-        registrationFormPage.formRegistration(name,
+        registrationFormPage.formRegistration(
+                name,
                 email,
                 password,
                 passwordRepeat,
@@ -47,11 +47,10 @@ public class RegistrationFormTests {
         registrationFormPage.checkRegistration(expectedText);
     }
 
-
     @Test
     @Tag("autotest")
     @DisplayName("Проверка валидации пароля.")
-    public void testNotCorrect(WebDriver driver) throws InterruptedException {
+    public void testNotCorrect() {
         String name = "ОТУС";
         String email = System.getProperty("login");
         String birthDate = "15-12-1995";
@@ -60,8 +59,6 @@ public class RegistrationFormTests {
         String passwordRepeatFalse = System.getProperty("password.false");
         String alertText = "Пароли не совпадают!";
 
-        RegistrationFormPage registrationFormPage = new RegistrationFormPage(driver);
-        registrationFormPage.open();
         registrationFormPage.formRegistration(name,
                 email,
                 password,

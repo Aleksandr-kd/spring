@@ -1,4 +1,4 @@
-package factory.settings;
+package two.onetwo.pages.settings;
 
 import org.openqa.selenium.remote.AbstractDriverOptions;
 
